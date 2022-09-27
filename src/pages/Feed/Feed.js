@@ -59,7 +59,12 @@ class Feed extends Component {
       })
       .then((resData) => {
         this.setState({
-          posts: resData.posts,
+          posts: resData.posts.map((post) => {
+            return {
+              ...post,
+              imagePath: post.imageUrl,
+            };
+          }),
           totalPosts: resData.totalItems,
           postsLoading: false,
         });
@@ -106,13 +111,14 @@ class Feed extends Component {
       editLoading: true,
     });
     const formData = new FormData(); // We should use FormData() to create a form and append data to it
-    formData.append('title', postData.title);
-    formData.append('content', postData.content);
-    formData.append('image', postData.image); // We will look for this field in our REST API
+    formData.append("title", postData.title);
+    formData.append("content", postData.content);
+    formData.append("image", postData.image); // We will look for this field in our REST API
     let url = "http://localhost:8080/feed/post";
     let method = "POST";
     if (this.state.editPost) {
-      url = "URL";
+      url = "http://localhost:8080/feed/post/" + this.state.editPost._id;
+      method = "PUT";
     }
 
     fetch(url, {
