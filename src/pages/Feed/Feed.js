@@ -52,8 +52,8 @@ class Feed extends Component {
     }
     fetch("http://localhost:8080/feed/posts?page=" + page, {
       headers: {
-        'Authorization': 'Bearer ' + this.props.token
-      }
+        Authorization: "Bearer " + this.props.token,
+      },
     })
       .then((res) => {
         if (res.status !== 200) {
@@ -129,6 +129,9 @@ class Feed extends Component {
       method: method,
       // We don't need the headers here, FormData will automatically set the headers
       body: formData, // We just need to pass formData here
+      headers: {
+        Authorization: "Bearer " + this.props.token,
+      },
     })
       .then((res) => {
         if (res.status !== 200 && res.status !== 201) {
@@ -180,7 +183,12 @@ class Feed extends Component {
 
   deletePostHandler = (postId) => {
     this.setState({ postsLoading: true });
-    fetch("http://localhost:8080/feed/post/" + postId, { method: "DELETE" })
+    fetch("http://localhost:8080/feed/post/" + postId, {
+      method: "DELETE",
+      headers: {
+        Authorization: "Bearer " + this.props.token,
+      },
+    })
       .then((res) => {
         if (res.status !== 200 && res.status !== 201) {
           throw new Error("Deleting a post failed!");
