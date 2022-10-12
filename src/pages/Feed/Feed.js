@@ -46,6 +46,10 @@ class Feed extends Component {
         this.addPost(data.post);
       } else if (data.action === 'update') {
         this.updatePost(data.post);
+      } else if (data.action === 'delete') {
+        // This will reload the posts, we could change the code to delete only the post and handle pagination too
+        // But just to keep it simple for this example:
+        this.loadPosts();
       }
     });
   }
@@ -250,10 +254,10 @@ class Feed extends Component {
       })
       .then((resData) => {
         console.log(resData);
-        this.setState((prevState) => {
-          const updatedPosts = prevState.posts.filter((p) => p._id !== postId);
-          return { posts: updatedPosts, postsLoading: false };
-        });
+        // this.setState((prevState) => {
+        //   const updatedPosts = prevState.posts.filter((p) => p._id !== postId);
+        //   return { posts: updatedPosts, postsLoading: false };
+        // });
       })
       .catch((err) => {
         console.log(err);
