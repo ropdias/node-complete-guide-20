@@ -55,7 +55,7 @@ Section 27 covered:
 - [x] Establishing a Connection From the Client
 - [x] Identifying Realtime Potential
 - [x] Sharing the IO Instance Across Files
-- [ ] Synchronizing POST Additions
+- [x] Synchronizing POST Additions
 - [ ] Fixing a Bug - The Missing Username
 - [ ] Updating Posts On All Connected Clients
 - [ ] Sorting Correctly

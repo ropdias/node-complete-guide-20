@@ -40,7 +40,12 @@ class Feed extends Component {
       .catch(this.catchError);
 
     this.loadPosts();
-    openSocket("http://localhost:8080");
+    const socket = openSocket("http://localhost:8080");
+    socket.on('posts', data => {
+      if (data.action === 'create') {
+        this.addPost(data.post);
+      }
+    });
   }
 
   addPost = (post) => {
@@ -186,9 +191,9 @@ class Feed extends Component {
               (p) => p._id === prevState.editPost._id
             );
             updatedPosts[postIndex] = post;
-          } else if (prevState.posts.length < 2) {
-            updatedPosts = prevState.posts.concat(post);
           }
+          // I removed a else if case here that was updating the posts after creating a new one
+          // Since we are using websocket to get new posts now
           return {
             posts: updatedPosts,
             isEditing: false,
